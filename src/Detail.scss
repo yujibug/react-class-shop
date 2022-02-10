@@ -1,0 +1,58 @@
+// @import './_reset.scss';
+
+// $color-main: #ff0000;
+
+// .red {
+//   color: $color-main;
+// }
+
+// div.container {
+//   h4 {
+//     color: blue; //nesting
+//   }
+//   p {
+//     color: green;
+//   }
+// }
+
+.alert-wrapper {
+  width: 100%;
+  height: 64px;
+}
+
+@mixin alrert() {
+  background-color: #eee;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fade-out-animation {
+  animation: fade-out 1s;
+}
+
+.my-alert {
+  @include alrert();
+}
+
+.my-alert-red {
+  @extend .my-alert;
+  background-color: #ffe591;
+}
+
+.my-alert-red {
+  p {
+    margin-bottom: 0;
+  }
+}

@@ -11,6 +11,7 @@ import './App.css';
 function App() {
   let [shoes, shoes변경] = useState(shoesData);
   let [loading, setLoading] = useState(false);
+  let [재고, 재고변경] = useState([10, 11, 12]);
 
   return (
     <div className='App'>
@@ -45,7 +46,7 @@ function App() {
 
       <Switch>
         <Route path='/detail/:id'>
-          <Detail shoes={shoes}></Detail>
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}></Detail>
         </Route>
 
         <Route path='/'>

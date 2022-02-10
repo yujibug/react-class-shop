@@ -35,6 +35,12 @@ function Detail(props) {
     return item.id == id;
   });
 
+  function 주문() {
+    const copied = [...props.재고];
+    copied[id] -= 1;
+    props.재고변경(copied);
+  }
+
   return (
     <div className='container'>
       <Box>
@@ -62,7 +68,12 @@ function Detail(props) {
           <h4 className='pt-5'></h4>
           <p>{selectProd.title}</p>
           <p>{selectProd.price}원</p>
-          <button className='btn btn-danger'>주문하기</button>
+
+          <Info 재고={props.재고} id={id}></Info>
+
+          <button className='btn btn-danger' onClick={주문}>
+            주문하기
+          </button>
           <button
             className='btn btn-danger btn-back'
             onClick={() => {
@@ -75,6 +86,10 @@ function Detail(props) {
       </div>
     </div>
   );
+}
+
+function Info(props) {
+  return <p>재고 : {props.재고[props.id]}</p>;
 }
 
 export default Detail;

@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import shoesData from './data';
 import Detail from './Detail';
@@ -7,6 +7,8 @@ import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.css';
+
+let 재고context = React.createContext();
 
 function App() {
   let [shoes, shoes변경] = useState(shoesData);
@@ -60,11 +62,13 @@ function App() {
             <Button variant='primary'>Learn more</Button>
           </div>
           <div className='container'>
-            <div className='row'>
-              {shoes.map((item) => {
-                return <Card item={item} key={item.id}></Card>;
-              })}
-            </div>
+            <재고context.Provider value={재고}>
+              <div className='row'>
+                {shoes.map((item) => {
+                  return <Card item={item} key={item.id}></Card>;
+                })}
+              </div>
+            </재고context.Provider>
             <button
               className='btn btn-primary'
               onClick={() => {
@@ -89,6 +93,8 @@ function App() {
 }
 
 function Card(props) {
+  let 재고 = useContext(재고context);
+
   return (
     <div className='col-md-4'>
       <Link to={'/detail/' + props.item.id}>
@@ -105,6 +111,7 @@ function Card(props) {
       <p>
         {props.item.content} {props.item.price}
       </p>
+      <p>재고 : {재고[props.item.id]}</p>
     </div>
   );
 }

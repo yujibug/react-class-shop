@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss';
+import { Nav } from 'react-bootstrap';
+
+import { CSSTransition } from 'react-transition-group';
 
 let Box = styled.div`
   padding: 20px;
@@ -13,8 +16,11 @@ let Title = styled.h4`
 `;
 
 function Detail(props) {
+  let [clickedTab, setClickedTab] = useState(0);
+
   let [alert, setAlert] = useState(true);
   let [animation, setAnimation] = useState('');
+  let [opacitySwitch, setOpacitySwitch] = useState(false);
 
   useEffect(() => {
     let timerAniamtion = setTimeout(() => {
@@ -83,9 +89,68 @@ function Detail(props) {
             뒤로가기
           </button>
         </div>
+
+        <Nav className='mt-5' variant='tabs' defaultActiveKey='0'>
+          <Nav.Item>
+            <Nav.Link
+              eventKey='0'
+              onClick={() => {
+                setOpacitySwitch(false);
+                setClickedTab(0);
+              }}
+            >
+              탭0
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              eventKey='1'
+              onClick={() => {
+                setOpacitySwitch(false);
+                setClickedTab(1);
+              }}
+            >
+              탭1
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              eventKey='2'
+              onClick={() => {
+                setOpacitySwitch(false);
+                setClickedTab(2);
+              }}
+            >
+              탭2
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
+
+        <CSSTransition in={opacitySwitch} classNames='opacity' timeout={500}>
+          <TabContent
+            clickedTab={clickedTab}
+            setOpacitySwitch={setOpacitySwitch}
+          ></TabContent>
+        </CSSTransition>
       </div>
     </div>
   );
+}
+
+function TabContent(props) {
+  useEffect(() => {
+    props.setOpacitySwitch(true);
+  });
+
+  if (props.clickedTab === 0) {
+    return <div>0번째 내용입니다</div>;
+  }
+  if (props.clickedTab === 1) {
+    return <div>1번째 내용입니다</div>;
+  }
+  if (props.clickedTab === 2) {
+    return <div>2번째 내용입니다</div>;
+  }
 }
 
 function Info(props) {

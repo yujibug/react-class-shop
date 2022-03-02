@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import shoesData from './data';
 import Detail from './Detail';
+import Cart from './Cart';
 import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
@@ -49,6 +50,10 @@ function App() {
       <Switch>
         <Route path='/detail/:id'>
           <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}></Detail>
+        </Route>
+
+        <Route path='/cart'>
+          <Cart></Cart>
         </Route>
 
         <Route path='/'>

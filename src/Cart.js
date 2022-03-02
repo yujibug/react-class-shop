@@ -42,13 +42,26 @@ function Cart(props) {
           );
         })}
       </Table>
+      {props.alertControl === true ? (
+        <div className='my-alert'>
+          <p>지금 구매하시면 20% 할인</p>
+          <button
+            onClick={() => {
+              props.dispatch({ type: 'false로' });
+            }}
+          >
+            닫기
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
 
 function mapStateToProps(state) {
   return {
-    state: state,
+    state: state.reducer,
+    alertControl: state.reducer2,
   };
 }
 

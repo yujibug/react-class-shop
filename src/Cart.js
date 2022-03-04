@@ -1,8 +1,12 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// import { connect } from 'react-redux';
 
 function Cart(props) {
+  let state = useSelector((state) => state.reducer);
+  let dispatch = useDispatch();
+
   return (
     <div>
       <Table responsive>
@@ -12,16 +16,16 @@ function Cart(props) {
           <th>수량</th>
           <th>변경</th>
         </tr>
-        {props.state.map((item) => {
+        {state.map((item) => {
           return (
             <tr key={item.id}>
-              <td>{item.id + 1}</td>
+              <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.quan}</td>
               <td>
                 <button
                   onClick={() => {
-                    props.dispatch({
+                    dispatch({
                       type: '수량증가',
                     });
                   }}
@@ -30,7 +34,7 @@ function Cart(props) {
                 </button>
                 <button
                   onClick={() => {
-                    props.dispatch({
+                    dispatch({
                       type: '수량감소',
                     });
                   }}
@@ -43,11 +47,11 @@ function Cart(props) {
         })}
       </Table>
       {props.alertControl === true ? (
-        <div className='my-alert'>
+        <div className='my-alert-red'>
           <p>지금 구매하시면 20% 할인</p>
           <button
             onClick={() => {
-              props.dispatch({ type: 'false로' });
+              dispatch({ type: 'false로' });
             }}
           >
             닫기
@@ -58,13 +62,11 @@ function Cart(props) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    state: state.reducer,
-    alertControl: state.reducer2,
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     state: state.reducer,
+//     alertControl: state.reducer2,
+//   };
+// }
 
-export default connect(mapStateToProps)(Cart);
-
-//export default Cart;
+export default Cart;

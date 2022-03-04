@@ -1,11 +1,12 @@
 /*eslint-disable*/
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss';
-import { Nav } from 'react-bootstrap';
+import { Nav, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 let Box = styled.div`
   padding: 20px;
@@ -21,6 +22,8 @@ function Detail(props) {
   let [alert, setAlert] = useState(true);
   let [animation, setAnimation] = useState('');
   let [opacitySwitch, setOpacitySwitch] = useState(false);
+
+  const inputQuan = useRef();
 
   useEffect(() => {
     let timerAniamtion = setTimeout(() => {
@@ -42,9 +45,21 @@ function Detail(props) {
   });
 
   function 주문() {
+    if (inputQuan.current.value == '') {
+      return;
+    }
     const copied = [...props.재고];
     copied[id] -= 1;
     props.재고변경(copied);
+    props.dispatch({
+      type: '항목추가',
+      payload: {
+        id: `${selectProd.id}`,
+        name: `${selectProd.title}`,
+        quan: `${inputQuan.current.value}`,
+      },
+    });
+    history.push('/cart');
   }
 
   return (
@@ -77,9 +92,16 @@ function Detail(props) {
 
           <Info 재고={props.재고} id={id}></Info>
 
-          <button className='btn btn-danger' onClick={주문}>
-            주문하기
-          </button>
+          <InputGroup className='mb-3'>
+            <FormControl placeholder='수량' ref={inputQuan} />
+            <Button
+              variant='outline-secondary'
+              id='button-addon2'
+              onClick={주문}
+            >
+              주문하기
+            </Button>
+          </InputGroup>
           <button
             className='btn btn-danger btn-back'
             onClick={() => {
@@ -157,4 +179,10 @@ function Info(props) {
   return <p>재고 : {props.재고[props.id]}</p>;
 }
 
-export default Detail;
+function mapStateToProps(state) {
+  return {
+    state: state.reducer,
+  };
+}
+
+export default connect(mapStateToProps)(Detail);

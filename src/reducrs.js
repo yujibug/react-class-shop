@@ -11,16 +11,23 @@ function reducer2(state = true, 액션) {
 }
 
 let 초기값 = [
-  { id: 0, name: '멋진신발1', quan: 2 },
-  { id: 1, name: '멋진신발2', quan: 1 },
-  { id: 2, name: '멋진신발3', quan: 4 },
-  { id: 3, name: '멋진신발4', quan: 5 },
-  { id: 4, name: '멋진신발5', quan: 1 },
-  { id: 5, name: '멋진신발6', quan: 3 },
-  { id: 6, name: '멋진신발7', quan: 2 },
+  { id: 0, name: 'White and Black', quan: 2 },
+  { id: 1, name: 'Red Knit', quan: 1 },
 ];
 
 function reducer(state = 초기값, 액션) {
+  if (액션.type === '항목추가') {
+    for (let i = 0; i < state.length; i++) {
+      if (state[i].id == 액션.payload.id) {
+        let copy = [...state];
+        copy[i].quan += Number(액션.payload.quan);
+        return copy;
+      }
+    }
+    let copy = [...state];
+    copy.push(액션.payload);
+    return copy;
+  }
   if (액션.type === '수량증가') {
     let copy = [...state];
     copy[0].quan++;

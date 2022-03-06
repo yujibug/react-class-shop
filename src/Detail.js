@@ -48,15 +48,19 @@ function Detail(props) {
     if (inputQuan.current.value == '') {
       return;
     }
+    if (Number(inputQuan.current.value) > props.재고[id]) {
+      window.alert('재고가 부족합니다');
+      return;
+    }
     const copied = [...props.재고];
     copied[id] -= 1;
     props.재고변경(copied);
     props.dispatch({
       type: '항목추가',
       payload: {
-        id: `${selectProd.id}`,
-        name: `${selectProd.title}`,
-        quan: `${inputQuan.current.value}`,
+        id: selectProd.id,
+        name: selectProd.title,
+        quan: inputQuan.current.value,
       },
     });
     history.push('/cart');

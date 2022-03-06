@@ -30,15 +30,15 @@ function reducer(state = 초기값, 액션) {
   }
   if (액션.type === '수량증가') {
     let copy = [...state];
-    copy[0].quan++;
+    copy[액션.payload.id].quan++;
     return copy;
   }
   if (액션.type === '수량감소') {
     let copy = [...state];
-    if (copy[0].quan === 0) {
+    if (copy[액션.payload.id].quan === 0) {
       return copy;
     }
-    copy[0].quan--;
+    copy[액션.payload.id].quan--;
     return copy;
   }
   return state;

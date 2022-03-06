@@ -27,6 +27,9 @@ function Cart(props) {
                   onClick={() => {
                     dispatch({
                       type: '수량증가',
+                      payload: {
+                        id: item.id,
+                      },
                     });
                   }}
                 >
@@ -36,6 +39,7 @@ function Cart(props) {
                   onClick={() => {
                     dispatch({
                       type: '수량감소',
+                      payload: { id: item.id },
                     });
                   }}
                 >
@@ -61,12 +65,4 @@ function Cart(props) {
     </div>
   );
 }
-
-// function mapStateToProps(state) {
-//   return {
-//     state: state.reducer,
-//     alertControl: state.reducer2,
-//   };
-// }
-
 export default Cart;

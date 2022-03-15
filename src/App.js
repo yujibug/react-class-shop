@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import shoesData from './data';
 import Detail from './Detail';
@@ -15,6 +15,9 @@ function App() {
   let [shoes, shoes변경] = useState(shoesData);
   let [loading, setLoading] = useState(false);
   let [재고, 재고변경] = useState([10, 11, 12]);
+
+  let [count, setCount] = useState(0);
+  let [age, setAge] = useState(20);
 
   return (
     <div className='App'>
@@ -56,6 +59,12 @@ function App() {
         </Route>
 
         <Route path='/'>
+          <CountAge
+            count={count}
+            setCount={setCount}
+            age={age}
+            setAge={setAge}
+          ></CountAge>
           <div className='jumbotron'>
             <h1>20% Season Off</h1>
             <p>
@@ -88,10 +97,34 @@ function App() {
             >
               더보기
             </button>
-            {loading === true ? <p>로딩중입니다</p> : null}
+            {loading === true && <p>로딩중입니다</p>}
           </div>
         </Route>
       </Switch>
+    </div>
+  );
+}
+
+function CountAge(props) {
+  useEffect(() => {
+    if (props.count === 0) {
+      return;
+    }
+    if (props.count < 3) {
+      props.setAge(props.age + 1);
+    }
+  }, [props.count]);
+  return (
+    <div>
+      <div>안녕하십니까 전 {props.age}</div>
+      <div>현재 카운트 수 : {props.count}</div>
+      <button
+        onClick={() => {
+          props.setCount(props.count + 1);
+        }}
+      >
+        누르면한살먹기
+      </button>
     </div>
   );
 }

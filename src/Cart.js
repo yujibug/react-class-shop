@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-// import { connect } from 'react-redux';
 
 function Cart(props) {
-  let state = useSelector((state) => state.reducer);
+  let item = useSelector((state) => state.reducer);
+  let alertControl = useSelector((state) => state.reducer2);
   let dispatch = useDispatch();
 
   return (
@@ -16,7 +16,7 @@ function Cart(props) {
           <th>수량</th>
           <th>변경</th>
         </tr>
-        {state.map((item) => {
+        {item.map((item) => {
           return (
             <tr key={item.id}>
               <td>{item.id}</td>
@@ -50,7 +50,7 @@ function Cart(props) {
           );
         })}
       </Table>
-      {props.alertControl === true ? (
+      {alertControl && (
         <div className='my-alert-red'>
           <p>지금 구매하시면 20% 할인</p>
           <button
@@ -61,7 +61,7 @@ function Cart(props) {
             닫기
           </button>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

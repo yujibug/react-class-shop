@@ -44,6 +44,29 @@ function Detail(props) {
     return item.id == id;
   });
 
+  useEffect(() => {
+    let product = localStorage.getItem('viewedProducts');
+    if (product === null) {
+      // let list = [id];
+      // localStorage.setItem('viewedProducts', JSON.stringify(list));
+      product = [];
+    } else {
+      product = [...JSON.parse(product)];
+    }
+    product.unshift(id);
+    product = [...new Set(product)];
+    localStorage.setItem('viewedProducts', JSON.stringify(product));
+    props.setViewedProduct([
+      ...JSON.parse(localStorage.getItem('viewedProducts')),
+    ]);
+    /*로컬스토리지에 id값 리스트를 저장하는게 목표잖아
+    근데 중복을 허용하면 안되고 -> set 자료형으로 하면되는데
+    젤 처음에 로컬스토리지에서 값을 불러온다음에
+    그게 null값이면 그냥 무지성으로 때려박기(set자료형도 필요 x)
+    만약 null값이 아니면 set자료형 씌운 로컬스로지에서 나온값 + id 를
+    스프레드 신택스씌운다음에 로컬스토리지에 저장*/
+  }, []);
+
   function 주문() {
     if (inputQuan.current.value == '') {
       return;

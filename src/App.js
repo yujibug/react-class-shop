@@ -8,6 +8,7 @@ import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.css';
+import Viewedproducts from './Viewedproducts';
 
 let 재고context = React.createContext();
 
@@ -18,6 +19,12 @@ function App() {
 
   let [count, setCount] = useState(0);
   let [age, setAge] = useState(20);
+
+  let product = localStorage.getItem('viewedProducts');
+  if (product !== null) {
+    product = [...JSON.parse(product)];
+  }
+  let [viewedproduct, setViewedProduct] = useState(product);
 
   return (
     <div className='App'>
@@ -51,7 +58,12 @@ function App() {
 
       <Switch>
         <Route path='/detail/:id'>
-          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}></Detail>
+          <Detail
+            shoes={shoes}
+            재고={재고}
+            재고변경={재고변경}
+            setViewedProduct={setViewedProduct}
+          ></Detail>
         </Route>
 
         <Route path='/cart'>
@@ -59,12 +71,7 @@ function App() {
         </Route>
 
         <Route path='/'>
-          <CountAge
-            count={count}
-            setCount={setCount}
-            age={age}
-            setAge={setAge}
-          ></CountAge>
+          <Viewedproducts viewedproduct={viewedproduct}></Viewedproducts>
           <div className='jumbotron'>
             <h1>20% Season Off</h1>
             <p>
